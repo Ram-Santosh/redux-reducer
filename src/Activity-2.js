@@ -9,7 +9,6 @@ export default function Api () {
         await axios.get(url)
         .then(response => setData(response.data))
     }
-    console.log(data)
 
     return (
         <>

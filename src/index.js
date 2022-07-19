@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Api from './Activity-2';
+// import Api from './Activity-2';
+import Todo from './Todo';
 import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -13,11 +14,19 @@ import reportWebVitals from './reportWebVitals';
 //   </React.StrictMode>
 // );
 
-// //Activity 2
+//Activity 2
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <Api />
+//   </React.StrictMode>
+// );
+
+//Activity 3
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Api />
+    <Todo />
   </React.StrictMode>
 );
 
