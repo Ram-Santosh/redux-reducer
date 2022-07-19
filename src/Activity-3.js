@@ -10,10 +10,14 @@ const todoSlice = createSlice({
             var task = {"task":action.payload, "isCompleted":false, "id":state.value.length + 1};
             state.value.push(task);
         },
-        isCompleted: (state) => {
-            // state.value.map((task) => {
-            //     task.completed
-            // })
+        isCompleted: (state, action) => {
+            state.value = state.value.map((task) => {
+                if (task.id.toString() === action.payload[0]) {
+                    task["isCompleted"] = action.payload[1];
+                    return task;
+                }
+                return task;
+            })
         }
     }
 })
