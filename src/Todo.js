@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 export default function Todo () {
     var [task, setTask] = useState("");
     var [allTasks, setAllTasks] = useState([]);
+    var [action, setAction] = useState("ALL");
     var copyRedux = useSelector((state) => state.value)
 
     useEffect(() => {
@@ -21,19 +22,16 @@ export default function Todo () {
         setTask("");
     };
 
-    var handleCheckbox = (e) => {
-        if (e.target.checked){
-            store.dispatch(isCompleted([e.target.value,true]));
-        }
-        else {
-            store.dispatch(isCompleted([e.target.value,false]));
-        }
+    var handleCompleted = (id) => {
+        console.log(id)
+        store.dispatch(isCompleted([id,true]));
     };
 
     var handleFilter = (e) => {
         var copy;
         if (e.target.name === "ALL"){
             setAllTasks(copyRedux);
+            setAction("ALL");
         }
         else if (e.target.name === "ACTIVE"){
             copy = copyRedux.filter((task) => {
@@ -42,19 +40,20 @@ export default function Todo () {
                 }
             })
             setAllTasks(copy);
+            setAction("ACTIVE")
         }
         else{
-            console.log(copyRedux)
             copy = copyRedux.filter((task) => {
                 if (task.isCompleted){
                     return task;
                 }
             })
-            console.log("after",copy)
             setAllTasks(copy);
+            setAction("COMPLETED")
         }
     }
 
+    console.log(allTasks, "all tasks")
     return (
         <>
             <input onChange={handleInput} value={task} placeholder="Add a Task"></input>
@@ -62,12 +61,41 @@ export default function Todo () {
             <button onClick={handleFilter} name="ALL">All</button>
             <button onClick={handleFilter} name="ACTIVE">Active</button>
             <button onClick={handleFilter} name="COMPLETED">Completed</button><br/><br/>
-            {allTasks.map((t,id) => {
-                return <>
-                    <input type="checkbox" onChange={handleCheckbox} key={id} value={id+1}></input>
-                    <label>&nbsp;{t.task}</label><br></br>
+
+            {action === "ALL" &&
+                <>
+                    <h3>ALL</h3>
+                    {allTasks.map((t,id) => {
+                        return <p onClick={()=>handleCompleted(id+1)} key={id+1} value={id+1}>
+                            {!t.isCompleted && 
+                                t.task
+                            }
+                            {t.isCompleted && 
+                                <s>{t.task}</s>
+                            }
+                            </p>
+                    })}
                 </>
-            })}
+            }
+
+            {action === "ACTIVE" &&
+                <>
+                    <h3>ACTIVE</h3>
+                    {allTasks.map((t,id) => {
+                        return <p key={id+1}>{t.task}</p>
+                    })}
+                </>
+            }
+
+            {action === "COMPLETED" &&
+                <>
+                    <h3>COMPLETED</h3>
+                    {allTasks.map((t,id) => {
+                        return <p key={id+1}><s>{t.task}</s></p>
+                    })}
+                </>
+            }
+
         </>
     );
 }

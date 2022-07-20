@@ -11,8 +11,9 @@ const todoSlice = createSlice({
             state.value.push(task);
         },
         isCompleted: (state, action) => {
+            console.log(action.payload)
             state.value = state.value.map((task) => {
-                if (task.id.toString() === action.payload[0]) {
+                if (task.id === action.payload[0]) {
                     task["isCompleted"] = action.payload[1];
                     return task;
                 }
