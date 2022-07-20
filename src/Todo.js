@@ -53,7 +53,6 @@ export default function Todo () {
         }
     }
 
-    console.log(allTasks, "all tasks")
     return (
         <>
             <input onChange={handleInput} value={task} placeholder="Add a Task"></input>
